@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"gitlab.com/WeberverByGo/code"
-	"gitlab.com/WeberverByGo/messagehandle/errorlog"
+	"gitlab.com/ServerUtility/code"
+	"gitlab.com/ServerUtility/messagehandle"
 )
 
 func init() {
@@ -89,7 +89,7 @@ func InterfaceToInt64(v interface{}) int64 {
 	case int64:
 		return v.(int64)
 	default:
-		errorlog.ErrorLogPrintln("Conver", v)
+		messagehandle.ErrorLogPrintln("Conver", v)
 		panic("Conver Error")
 	}
 }

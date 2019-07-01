@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"gitlab.com/WeberverByGo/code"
+	"gitlab.com/ServerUtility/code"
+	"gitlab.com/ServerUtility/messagehandle"
 	"gitlab.com/WeberverByGo/data"
-	"gitlab.com/WeberverByGo/messagehandle/errorlog"
 	"gitlab.com/WeberverByGo/mycache"
 )
 
@@ -26,8 +26,8 @@ func NewToken(gameAccount string) string {
 }
 
 // CheckToken Check Token func
-func CheckToken(gameAccount, token string) errorlog.ErrorMsg {
-	err := errorlog.New()
+func CheckToken(gameAccount, token string) messagehandle.ErrorMsg {
+	err := messagehandle.New()
 	ServerToken := mycache.GetToken(gameAccount)
 	if ServerToken != token {
 		err.ErrorCode = code.Unauthenticated
@@ -37,8 +37,8 @@ func CheckToken(gameAccount, token string) errorlog.ErrorMsg {
 }
 
 // CheckGameType Check Game Type
-func CheckGameType(gameTypeID string) errorlog.ErrorMsg {
-	err := errorlog.New()
+func CheckGameType(gameTypeID string) messagehandle.ErrorMsg {
+	err := messagehandle.New()
 	if gameTypeID != data.GameTypeID {
 		err.ErrorCode = code.GameTypeError
 		err.Msg = "GameTypeError"
