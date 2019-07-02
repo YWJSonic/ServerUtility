@@ -1,8 +1,6 @@
 package playerinfo
 
-import (
-	"time"
-)
+import "time"
 
 // Account Type
 const (
@@ -15,7 +13,7 @@ const (
 // IPratyAccount thirdparty api interface
 type IPratyAccount interface {
 	PartyAccount() string
-	GameAccount() string
+	GameAccount(string) string
 	AccountType() int64
 }
 

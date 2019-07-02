@@ -6,8 +6,6 @@ import (
 
 	"gitlab.com/ServerUtility/code"
 	"gitlab.com/ServerUtility/messagehandle"
-	"gitlab.com/WeberverByGo/data"
-	"gitlab.com/WeberverByGo/mycache"
 )
 
 // NewAccount convert all plant account to server account
@@ -16,8 +14,8 @@ func NewAccount(plant, account string) string {
 }
 
 // NewGameAccount new game account
-func NewGameAccount(account string) string {
-	return MD5Code(data.AccountEncodeStr + account)
+func NewGameAccount(encodeStr, account string) string {
+	return MD5Code(encodeStr + account)
 }
 
 // NewToken ...
@@ -26,10 +24,9 @@ func NewToken(gameAccount string) string {
 }
 
 // CheckToken Check Token func
-func CheckToken(gameAccount, token string) messagehandle.ErrorMsg {
+func CheckToken(serverToken, clientToken string) messagehandle.ErrorMsg {
 	err := messagehandle.New()
-	ServerToken := mycache.GetToken(gameAccount)
-	if ServerToken != token {
+	if serverToken != clientToken {
 		err.ErrorCode = code.Unauthenticated
 		err.Msg = "TokenError"
 	}
@@ -37,9 +34,9 @@ func CheckToken(gameAccount, token string) messagehandle.ErrorMsg {
 }
 
 // CheckGameType Check Game Type
-func CheckGameType(gameTypeID string) messagehandle.ErrorMsg {
+func CheckGameType(serverGameTypeID, clientGameTypeID string) messagehandle.ErrorMsg {
 	err := messagehandle.New()
-	if gameTypeID != data.GameTypeID {
+	if serverGameTypeID != clientGameTypeID {
 		err.ErrorCode = code.GameTypeError
 		err.Msg = "GameTypeError"
 	}

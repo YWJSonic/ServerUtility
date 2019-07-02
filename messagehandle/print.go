@@ -14,6 +14,8 @@ var (
 	IsPrintLog = true
 	// IsPrintErrorLog Error log
 	IsPrintErrorLog = true
+	// TimeFormat date time print format
+	TimeFormat = "2006-01-02 15:04:05Z07:00" //time.stdLongYear + '-' + time.stdZeroMonth + '-' + time.stdZeroDay + ' ' +
 )
 
 // log Tag
@@ -85,14 +87,14 @@ func ErrorLogPrintln(msg string, a ...interface{}) {
 
 func print(logtype, msg string, a ...interface{}) {
 	if IsAddTimeFlag {
-		fmt.Printf("%s %s %s", time.Now().Format(time.Stamp), logtype, msg)
+		fmt.Printf("%s %s %s", time.Now().Format(TimeFormat), logtype, msg)
 	} else {
 		fmt.Printf("%s %s", logtype, msg)
 	}
 }
 func printf(logtype, msg string, a ...interface{}) {
 	if IsAddTimeFlag {
-		msg = fmt.Sprintf("%s %s %s", time.Now().Format(time.Stamp), logtype, msg)
+		msg = fmt.Sprintf("%s %s %s", time.Now().Format(TimeFormat), logtype, msg)
 	} else {
 		msg = fmt.Sprintf("%s %s", logtype, msg)
 	}
@@ -101,7 +103,7 @@ func printf(logtype, msg string, a ...interface{}) {
 func println(logtype, msg string, a ...interface{}) {
 	var tmp []interface{}
 	if IsAddTimeFlag {
-		tmp = append(tmp, time.Now().Format(time.Stamp))
+		tmp = append(tmp, time.Now().Format(TimeFormat))
 	}
 	tmp = append(tmp, logtype)
 	tmp = append(tmp, msg)

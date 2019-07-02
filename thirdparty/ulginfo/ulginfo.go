@@ -52,8 +52,8 @@ func (ulg *Result) PartyAccount() string {
 }
 
 // GameAccount ...
-func (ulg *Result) GameAccount() string {
-	return foundation.NewGameAccount(string(ulg.AccountID))
+func (ulg *Result) GameAccount(encodeStr string) string {
+	return foundation.NewGameAccount(encodeStr, string(ulg.AccountID))
 }
 
 // PartyToken ...
