@@ -7,6 +7,10 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"github.com/julienschmidt/httprouter"
+	"gitlab.com/ServerUtility/foundation"
+	"gitlab.com/ServerUtility/messagehandle"
 )
 
 // HTTPGet ...
@@ -79,4 +83,33 @@ func HTTPPostRawRequest(client *http.Client, url string, value []byte) []byte {
 
 	body, _ := ioutil.ReadAll(resp.Body)
 	return body
+}
+
+// HTTPResponse Respond to cliente
+func HTTPResponse(httpconn http.ResponseWriter, data interface{}, err messagehandle.ErrorMsg) {
+	result := make(map[string]interface{})
+	result["data"] = data
+	result["error"] = err
+	fmt.Fprint(httpconn, foundation.JSONToString(result))
+}
+
+// AddHeader add request header
+func AddHeader(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	// (*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	(*w).Header().Set("Content-Type", "application/json")
+	// (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	// (*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+}
+
+// Option add header option
+func Option(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	headers := w.Header()
+	headers.Add("Access-Control-Allow-Origin", "*")
+	headers.Add("Vary", "Origin")
+	headers.Add("Vary", "Access-Control-Request-Method")
+	headers.Add("Vary", "Access-Control-Request-Headers")
+	headers.Add("Access-Control-Allow-Headers", "Content-Type, Origin, Accept, token")
+	headers.Add("Access-Control-Allow-Methods", "GET, POST,OPTIONS")
+	w.WriteHeader(http.StatusOK)
 }
