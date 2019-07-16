@@ -27,7 +27,7 @@ type Result struct {
 	AccountID     int64         `json:"userID,omitempty"`
 	Status        int           `json:"status,omitempty"` // 0: empty 1:exchange 2:checkout
 	AccountName   string        `json:"accountName,omitempty"`
-	ErrorMsg      string        `json:"errorMsg,omitempty"`
+	ErrorMsg      string        `json:"error_msg,omitempty"`
 	UserName      string        `json:"userName,omitempty"`   // not use, give default value
 	AccountToken  string        `json:"token,omitempty"`      // for plant token
 	GameToken     string        `json:"game_token,omitempty"` // for game token
