@@ -1,7 +1,6 @@
 package crontabinfo
 
 // 字段名				是否必须	允许的值			允许的特定字符
-// 秒(Seconds)			是			0-59				* / , -
 // 分(Minutes)			是			0-59				* / , -
 // 时(Hours)			是			0-23				* / , -
 // 日(Day of month)		是			1-31				* / , – ?

@@ -1,7 +1,7 @@
 package myhttp
 
 import (
-	"github.com/julienschmidt/httprouter"
+	"gitlab.com/ServerUtility/httprouter"
 )
 
 // ConnType ...

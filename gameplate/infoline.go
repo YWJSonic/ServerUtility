@@ -6,14 +6,18 @@ type InfoLine struct {
 	WildPoint     [][]int
 	LinePoint     [][]int
 	LineSymbolNum [][]int
-	// MainSymbol    int
 	Score         int64
 	JackPartScore int64
 	WinRate       int
+	RespinCount   int
+	FreeGameCount int
+	IsRespint     int
+	IsFreeGame    int
+	// MainSymbol    int
 }
 
-// NewLineInfo Get default init NewLineInfo
-func NewLineInfo() InfoLine {
+// NewInfoLine Get default init NewLineInfo
+func NewInfoLine() InfoLine {
 	var result InfoLine
 	// result.MainSymbol = EmptyNum
 	return result
