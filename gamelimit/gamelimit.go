@@ -1,5 +1,7 @@
 package gamelimit
 
+import "fmt"
+
 // IsInTotalMoneyWinLimit if int limit return true
 // 0 is no limit
 func IsInTotalMoneyWinLimit(limit, betMoney, totalWin int64) bool {
@@ -21,5 +23,15 @@ func IsInTotalBetRateWinLimit(limit, betMoney, totalWin int64) bool {
 	if (totalWin / betMoney) > limit {
 		return false
 	}
+	return true
+}
+
+// IsPlayerDayWinInLimit ...
+func IsPlayerDayWinInLimit(limit, playerTotalWin int64) bool {
+
+	if playerTotalWin >= limit {
+		panic(fmt.Sprintf("PlayerDayWin:%d", playerTotalWin))
+	}
+
 	return true
 }

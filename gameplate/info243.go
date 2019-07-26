@@ -5,62 +5,93 @@ const EmptyNum = -9999
 
 // InfoLine243 minimum result structure
 type InfoLine243 struct {
-	ScotterPoint  [][]int
-	WildPoint     [][]int
-	LinePoint     [][]int
-	LineSymbolNum [][]int
-	MainSymbol    int
-	Score         int64
-	JackPartScore int64
-	WinRate       int
+	// plate info
+	ScotterPoint  [][]int `json:"ScotterPoint"`
+	WildPoint     [][]int `json:"WildPoint"`
+	LinePoint     [][]int `json:"LinePoint"`
+	LineSymbolNum [][]int `json:"LineSymbolNum"`
+
+	// pay info
+	Score        int64 `json:"Score"`
+	JackPotScore int64 `json:"JackPotScore"`
+	LineWinRate  int   `json:"LineWinRate"`
+
+	// // bound game info
+	// RespinCount   int `json:"RespinCount,omitempty"`
+	// FreeGameCount int `json:"FreeGameCount,omitempty"`
+
+	// // bonud game flag
+	IsLink int `json:"IsLink"`
+	// IsRespin      int `json:"IsRespin"`      // Respin Game some scroll respin
+	// IsFreeGame    int `json:"IsFreeGame"`    // Free Game free spin
+	// IsScotterGame int `json:"IsScotterGame"` // Scotter Game spcial game
+}
+
+// WildCount ...
+func (I *InfoLine243) WildCount() int {
+	var wildCount int
+
+	for _, wildPointArray := range I.WildPoint {
+		wildCount += len(wildPointArray)
+	}
+
+	return wildCount
+}
+
+// ScotterCount ...
+func (I *InfoLine243) ScotterCount() int {
+	var scotterCount int
+
+	for _, scrtterPointArray := range I.ScotterPoint {
+		scotterCount += len(scrtterPointArray)
+	}
+
+	return scotterCount
+}
+
+// AddNewPoint add new line point
+func (I *InfoLine243) AddNewPoint(symbolNum int, point int, option PlateOption) {
+
+	var wildPoint []int
+	var scotterPoint []int
+	var symbolNums []int
+
+	symbolNums = append(symbolNums, symbolNum)
+	if isWild, _ := option.IsWild(symbolNum); isWild {
+		wildPoint = append(wildPoint, point)
+	} else if isScotter, _ := option.IsScotter(symbolNum); isScotter {
+		scotterPoint = append(scotterPoint, point)
+	}
+
+	I.WildPoint = append(I.WildPoint, wildPoint)
+	I.ScotterPoint = append(I.ScotterPoint, scotterPoint)
+	I.LinePoint = append(I.LinePoint, []int{point})
+	I.LineSymbolNum = append(I.LineSymbolNum, symbolNums)
+}
+
+// AddNewLine ...
+func (I *InfoLine243) AddNewLine(symbolNums []int, linePoint []int, option PlateOption) {
+
+	var wildPoint = make([]int, 0)
+	var scotterPoint = make([]int, 0)
+
+	// symbolNums = append(symbolNums, symbolNum)
+	for Index, rowSymbolNum := range symbolNums {
+		if isWild, _ := option.IsWild(rowSymbolNum); isWild {
+			wildPoint = append(wildPoint, linePoint[Index])
+		} else if isScotter, _ := option.IsScotter(rowSymbolNum); isScotter {
+			scotterPoint = append(scotterPoint, linePoint[Index])
+		}
+	}
+
+	I.WildPoint = append(I.WildPoint, wildPoint)
+	I.ScotterPoint = append(I.ScotterPoint, scotterPoint)
+	I.LinePoint = append(I.LinePoint, linePoint)
+	I.LineSymbolNum = append(I.LineSymbolNum, symbolNums)
 }
 
 // NewInfoLine243 Get default init NewLineInfo
 func NewInfoLine243() InfoLine243 {
 	var result InfoLine243
-	result.MainSymbol = EmptyNum
 	return result
-}
-
-// AddNewPoint add new line point
-func (l *InfoLine243) AddNewPoint(col []int, symbol []int, option PlateOption) {
-
-	var wildPoint []int
-	var scotterPoint []int
-	var symbolNums []int
-	var symbolNum int
-
-	for _, point := range col {
-		symbolNum = symbol[point]
-		symbolNums = append(symbolNums, symbolNum)
-		if isWild, wildNum := option.IsWild(symbolNum); isWild {
-			wildPoint = append(wildPoint, point)
-			if l.MainSymbol == EmptyNum {
-				l.MainSymbol = wildNum
-			}
-		} else if isScotter, scotterNum := option.IsScotter(symbolNum); isScotter {
-			scotterPoint = append(scotterPoint, point)
-			if l.MainSymbol == EmptyNum {
-				l.MainSymbol = scotterNum
-			}
-		} else {
-			l.MainSymbol = symbol[point]
-		}
-	}
-
-	l.WildPoint = append(l.WildPoint, wildPoint)
-	l.ScotterPoint = append(l.ScotterPoint, scotterPoint)
-	l.LinePoint = append(l.LinePoint, col)
-	l.LineSymbolNum = append(l.LineSymbolNum, symbolNums)
-}
-
-// WinLineCount get symbol win count
-func (l *InfoLine243) WinLineCount() int {
-	return len(l.LinePoint)
-}
-
-// Checkout Count line score
-func (l *InfoLine243) Checkout(betMoney int64, winRate int) {
-	l.WinRate = winRate
-	l.Score = betMoney * int64(winRate)
 }

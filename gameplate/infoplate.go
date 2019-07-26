@@ -9,6 +9,11 @@ type PlateOption struct {
 	LineMiniCount int
 }
 
+// EmptyNum this number don't use, is use compare does symbol set.
+func (p *PlateOption) EmptyNum() int {
+	return EmptyNum
+}
+
 // IsWild wild compare
 func (p *PlateOption) IsWild(item int) (bool, int) {
 	for _, wild := range p.Wild {

@@ -40,6 +40,16 @@ func ResultMap(scrollIndex, plate interface{}, scores int64, islink bool) map[st
 	return result
 }
 
+// ResultMap243 game result base info
+func ResultMap243(scrollIndex, plate, gameresult interface{}) map[string]interface{} {
+	result := make(map[string]interface{})
+
+	result["plateindex"] = scrollIndex
+	result["plate"] = plate
+	result["gameresult"] = gameresult
+	return result
+}
+
 // NewPlate 1D plate
 func NewPlate(plateSize []int, scroll [][]int) ([]int, []int) {
 	var ScrollIndex []int
@@ -72,48 +82,6 @@ func NewPlate2D(plateSize []int, scroll [][]int) ([][]int, [][]int) {
 	}
 
 	return ScrollIndex, plate
-}
-
-// Line243ResultArray ...
-func Line243ResultArray(plate [][]int, lineMap [][]int, option PlateOption) []InfoLine243 {
-	var result []InfoLine243
-	var resultLine InfoLine243
-
-	for _, line := range lineMap {
-		resultLine = GetLine243Point(plate, line, option)
-		if len(resultLine.LinePoint) > option.LineMiniCount {
-			result = append(result, resultLine)
-		}
-	}
-
-	return result
-}
-
-// GetLine243Point return line point(index) number
-func GetLine243Point(plate [][]int, line []int, option PlateOption) InfoLine243 {
-	var pointSymbol int
-	var isPointWild bool
-	var isMainWild bool
-
-	result := NewInfoLine243()
-	mainSymbol := plate[0][line[0]]
-
-	for i, point := range line {
-		pointSymbol = plate[i][point]
-		isPointWild, _ = option.IsWild(pointSymbol)
-
-		if !isPointWild {
-			isMainWild, _ = option.IsWild(mainSymbol)
-			if isMainWild {
-				mainSymbol = pointSymbol
-			} else if mainSymbol != pointSymbol {
-				return result
-			}
-		}
-		result.AddNewPoint([]int{point}, plate[i], option)
-	}
-
-	return result
 }
 
 // PlateToLinePlate ...
