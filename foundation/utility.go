@@ -142,6 +142,27 @@ func RangeRandom(rangeInt []int) int {
 
 }
 
+// RangeRandomInt64 array random index
+func RangeRandomInt64(rangeInt []int64) int {
+	var Sum int64
+
+	for _, value := range rangeInt {
+		Sum += value
+	}
+
+	random := rand.Int63n(Sum)
+
+	Sum = 0
+	for i, value := range rangeInt {
+		Sum += value
+		if Sum > random {
+			return i
+		}
+	}
+	return -1
+
+}
+
 // ConevrToTimeInt64 Get time point
 func ConevrToTimeInt64(year int, month time.Month, day, hour, min, sec, nsec int) int64 {
 	return time.Date(year, month, day, hour, min, sec, nsec, time.Local).Unix()
