@@ -10,8 +10,6 @@ type InfoLine243 struct {
 	WildPoint      [][]int `json:"WildPoint"`
 	WinSymbolPoint [][]int `json:"WinSymbolPoint"`
 	WinSymbolNum   [][]int `json:"WinSymbolNum"`
-	LineNum        [][]int `json:"LineNum"`
-	LinePoint      [][]int `json:"LinePoint"`
 
 	// pay info
 	Score          int64 `json:"Score"`

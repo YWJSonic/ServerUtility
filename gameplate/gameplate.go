@@ -9,22 +9,6 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-// ResultMapLink game result base info
-func ResultMapLink(scrollIndex, plate, line interface{}, scores int64, islink bool) map[string]interface{} {
-	result := make(map[string]interface{})
-
-	result["line"] = line
-	result["plateindex"] = scrollIndex
-	result["plate"] = plate
-	result["scores"] = scores
-	if islink {
-		result["islink"] = 1
-	} else {
-		result["islink"] = 0
-	}
-	return result
-}
-
 // ResultMap game result base info
 func ResultMap(scrollIndex, plate interface{}, scores int64, islink bool) map[string]interface{} {
 	result := make(map[string]interface{})
@@ -37,6 +21,16 @@ func ResultMap(scrollIndex, plate interface{}, scores int64, islink bool) map[st
 	} else {
 		result["islink"] = 0
 	}
+	return result
+}
+
+// ResultMapLine game result base info
+func ResultMapLine(scrollIndex, plate, gameresult interface{}) map[string]interface{} {
+	result := make(map[string]interface{})
+
+	result["plateindex"] = scrollIndex
+	result["plate"] = plate
+	result["gameresult"] = gameresult
 	return result
 }
 

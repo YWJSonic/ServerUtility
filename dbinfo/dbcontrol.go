@@ -88,6 +88,7 @@ func Exec(db *sql.DB, query string, args ...interface{}) (sql.Result, messagehan
 	return res, err
 }
 
+// MakeProcedureQueryStr ...
 func MakeProcedureQueryStr(name string, args int) string {
 	query := "CALL " + name + "("
 
@@ -101,6 +102,7 @@ func MakeProcedureQueryStr(name string, args int) string {
 	return query
 }
 
+// MakeScanArray ...
 func MakeScanArray(rows *sql.Rows) []interface{} {
 	var Result []interface{}
 	Keys, err := rows.Columns()
@@ -124,6 +126,7 @@ func MakeScanArray(rows *sql.Rows) []interface{} {
 	return Result
 }
 
+// MakeScanMap ...
 func MakeScanMap(rows *sql.Rows) []map[string]interface{} {
 	Keys, err := rows.Columns()
 	types, err := rows.ColumnTypes()

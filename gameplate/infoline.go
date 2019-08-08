@@ -3,24 +3,25 @@ package gameplate
 // InfoLine minimum result structure
 type InfoLine struct {
 	// plate info
-	ScotterPoint  [][]int `json:"ScotterPoint"`
-	WildPoint     [][]int `json:"WildPoint"`
-	LinePoint     [][]int `json:"LinePoint"`
-	LineSymbolNum [][]int `json:"LineSymbolNum"`
+	ScotterPoint    [][]int `json:"ScotterPoint"`
+	WildPoint       [][]int `json:"WildPoint"`
+	LineSymbolPoint [][]int `json:"LineSymbolPoint"`
+	LineSymbolNum   [][]int `json:"LineSymbolNum"`
 
 	// pay info
-	Score        int64 `json:"Score"`
-	JackPotScore int64 `json:"JackPotScore"`
-	WinRate      int   `json:"WinRate"`
+	Score          int64 `json:"Score"`
+	JackPotScore   int64 `json:"JackPotScore"`
+	SpecialWinRate int64 `json:"SpecialWinRate"`
+	LineWinRate    int   `json:"LineWinRate"`
 
-	// bound game info
-	RespinCount   int `json:"RespinCount,omitempty"`
-	FreeGameCount int `json:"FreeGameCount,omitempty"`
+	// // bound game info
+	// RespinCount   int `json:"RespinCount,omitempty"`
+	// FreeGameCount int `json:"FreeGameCount,omitempty"`
 
-	// bonud game flag
-	IsRespin      int `json:"IsRespin"`      // Respin Game some scroll respin
-	IsFreeGame    int `json:"IsFreeGame"`    // Free Game free spin
-	IsScotterGame int `json:"IsScotterGame"` // Scotter Game spcial game
+	// // bonud game flag
+	// IsRespin      int `json:"IsRespin"`      // Respin Game some scroll respin
+	// IsFreeGame    int `json:"IsFreeGame"`    // Free Game free spin
+	// IsScotterGame int `json:"IsScotterGame"` // Scotter Game spcial game
 }
 
 // WildCount ...
@@ -48,9 +49,9 @@ func (I *InfoLine) ScotterCount() int {
 // AddNewPoint add new line point
 func (I *InfoLine) AddNewPoint(symbolNum int, point int, option PlateOption) {
 
-	var wildPoint []int
-	var scotterPoint []int
-	var symbolNums []int
+	var wildPoint = make([]int, 0)
+	var scotterPoint = make([]int, 0)
+	var symbolNums = make([]int, 0)
 
 	symbolNums = append(symbolNums, symbolNum)
 	if isWild, _ := option.IsWild(symbolNum); isWild {
@@ -61,15 +62,15 @@ func (I *InfoLine) AddNewPoint(symbolNum int, point int, option PlateOption) {
 
 	I.WildPoint = append(I.WildPoint, wildPoint)
 	I.ScotterPoint = append(I.ScotterPoint, scotterPoint)
-	I.LinePoint = append(I.LinePoint, []int{point})
+	I.LineSymbolPoint = append(I.LineSymbolPoint, []int{point})
 	I.LineSymbolNum = append(I.LineSymbolNum, symbolNums)
 }
 
 // AddNewLine ...
 func (I *InfoLine) AddNewLine(symbolNums []int, linePoint []int, option PlateOption) {
 
-	var wildPoint []int
-	var scotterPoint []int
+	var wildPoint = make([]int, 0)
+	var scotterPoint = make([]int, 0)
 
 	// symbolNums = append(symbolNums, symbolNum)
 	for Index, rowSymbolNum := range symbolNums {
@@ -82,7 +83,7 @@ func (I *InfoLine) AddNewLine(symbolNums []int, linePoint []int, option PlateOpt
 
 	I.WildPoint = append(I.WildPoint, wildPoint)
 	I.ScotterPoint = append(I.ScotterPoint, scotterPoint)
-	I.LinePoint = append(I.LinePoint, linePoint)
+	I.LineSymbolPoint = append(I.LineSymbolPoint, linePoint)
 	I.LineSymbolNum = append(I.LineSymbolNum, symbolNums)
 }
 
