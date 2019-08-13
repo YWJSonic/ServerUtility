@@ -32,6 +32,14 @@ func CallReadOutMap(db *sql.DB, name string, args ...interface{}) ([]map[string]
 
 }
 
+// CallReadOutMultipleMap call stored procedure
+func CallReadOutMultipleMap(db *sql.DB, name string, args ...interface{}) ([][]map[string]interface{}, messagehandle.ErrorMsg) {
+	QueryStr := MakeProcedureQueryStr(name, len(args))
+	request, err := QueryMultipleResult(db, QueryStr, args...)
+	return request, err
+
+}
+
 // CallWrite ...
 func CallWrite(db *sql.DB, name string, args ...interface{}) (sql.Result, messagehandle.ErrorMsg) {
 	request, err := Exec(db, name, args...)
@@ -54,6 +62,34 @@ func Query(db *sql.DB, query string, args ...interface{}) ([]interface{}, messag
 	defer res.Close()
 
 	return request, err
+}
+
+// QueryMultipleResult ...
+func QueryMultipleResult(db *sql.DB, query string, args ...interface{}) ([][]map[string]interface{}, messagehandle.ErrorMsg) {
+	err := messagehandle.New()
+
+	res, errMsg := db.Query(query, args...)
+	if errMsg != nil {
+		err.ErrorCode = code.FailedPrecondition
+		err.Msg = "DBExecFail"
+		messagehandle.ErrorLogPrintln("DB", errMsg, query, args)
+		return nil, err
+	}
+
+	var request [][]map[string]interface{}
+	var resultMap []map[string]interface{}
+
+	resultMap = MakeScanMap(res)
+	request = append(request, resultMap)
+
+	for res.NextResultSet() {
+		resultMap = MakeScanMap(res)
+		request = append(request, resultMap)
+	}
+	defer res.Close()
+
+	return request, err
+
 }
 
 // QueryOutMap Use to SELECT return array map
