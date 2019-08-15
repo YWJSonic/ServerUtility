@@ -185,6 +185,15 @@ func ConevrToTimeInt64(year int, month time.Month, day, hour, min, sec, nsec int
 	return time.Date(year, month, day, hour, min, sec, nsec, time.Local).Unix()
 }
 
+// MapToArray return map keys and values
+func MapToArray(mapData map[int64]int64) (keys, values []int64) {
+	for key, value := range mapData {
+		keys = append(keys, key)
+		values = append(values, value)
+	}
+	return
+}
+
 // AppendMap map append map
 func AppendMap(Target map[string]interface{}, Source map[string]interface{}) map[string]interface{} {
 	for Key, Value := range Source {
@@ -193,12 +202,12 @@ func AppendMap(Target map[string]interface{}, Source map[string]interface{}) map
 	return Target
 }
 
-// ArrayShift ...
-// func ArrayShift(Target []*interface{}) (interface{}, []*interface{}) {
+// ArrayShift Array Type []map[string]interface{}
+func ArrayShift(Target []map[string]interface{}) (map[string]interface{}, []map[string]interface{}) {
 
-// 	var out interface{}
-// 	out = Target[0]
-// 	Target = Target[1:]
+	var out map[string]interface{}
+	out = Target[0]
+	Target = Target[1:]
 
-// 	return out, &Target
-// }
+	return out, Target
+}

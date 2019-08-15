@@ -74,10 +74,12 @@ func PostData(r *http.Request) map[string]interface{} {
 func HTTPPostRawRequest(client *http.Client, url string, value []byte) []byte {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(value))
 	req.Header.Set("Content-Type", "application/json")
+	messagehandle.LogPrintln("HTTPPostRawRequest", req)
 
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println("Error", err)
+		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Resp", resp)
+		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Error", err)
 	}
 	defer resp.Body.Close()
 
