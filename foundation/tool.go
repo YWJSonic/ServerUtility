@@ -8,6 +8,11 @@ import (
 	"gitlab.com/ServerUtility/messagehandle"
 )
 
+// ServerTotalPayScoreKey ...
+func ServerTotalPayScoreKey(GameIndex int) string {
+	return fmt.Sprintf("ServerTotalPayScore%d", GameIndex)
+}
+
 // NewAccount convert all plant account to server account
 func NewAccount(plant, account string) string {
 	return fmt.Sprintf("%s:%s", plant, account)

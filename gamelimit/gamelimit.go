@@ -1,6 +1,13 @@
 package gamelimit
 
-import "fmt"
+import (
+	"os"
+
+	"gitlab.com/ServerUtility/messagehandle"
+)
+
+// ServerDayPayLimit All player total can win score
+var ServerDayPayLimit int64 = 15000000
 
 // IsInTotalMoneyWinLimit if int limit return true
 // 0 is no limit
@@ -26,11 +33,11 @@ func IsInTotalBetRateWinLimit(limit, betMoney, totalWin int64) bool {
 	return true
 }
 
-// IsPlayerDayWinInLimit ...
-func IsPlayerDayWinInLimit(limit, playerTotalWin int64) bool {
-
-	if playerTotalWin >= limit {
-		panic(fmt.Sprintf("PlayerDayWin:%d", playerTotalWin))
+// IsServerDayPayInLimit if over limit shutdown server
+func IsServerDayPayInLimit(allPlayerWinScore int64) bool {
+	if allPlayerWinScore > ServerDayPayLimit {
+		messagehandle.LogPrintf("AllPlayerDayWin:%d", allPlayerWinScore)
+		os.Exit(0)
 	}
 
 	return true

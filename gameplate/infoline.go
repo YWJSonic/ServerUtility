@@ -46,6 +46,26 @@ func (I *InfoLine) ScotterCount() int {
 	return scotterCount
 }
 
+// AddEmptyPoint add new empty point
+func (I *InfoLine) AddEmptyPoint() {
+
+	var wildPoint = make([]int, 0)
+	var scotterPoint = make([]int, 0)
+	var symbolNums = make([]int, 0)
+
+	// symbolNums = append(symbolNums, symbolNum)
+	// if isWild, _ := option.IsWild(symbolNum); isWild {
+	// 	wildPoint = append(wildPoint, point)
+	// } else if isScotter, _ := option.IsScotter(symbolNum); isScotter {
+	// 	scotterPoint = append(scotterPoint, point)
+	// }
+
+	I.WildPoint = append(I.WildPoint, wildPoint)
+	I.ScotterPoint = append(I.ScotterPoint, scotterPoint)
+	I.LineSymbolPoint = append(I.LineSymbolPoint, []int{})
+	I.LineSymbolNum = append(I.LineSymbolNum, symbolNums)
+}
+
 // AddNewPoint add new line point
 func (I *InfoLine) AddNewPoint(symbolNum int, point int, option PlateOption) {
 
