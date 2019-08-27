@@ -2,6 +2,8 @@ package foundation
 
 import (
 	"fmt"
+	"reflect"
+	"runtime"
 	"time"
 
 	"gitlab.com/ServerUtility/code"
@@ -66,4 +68,9 @@ func IsInclude(target int, src []int) bool {
 		}
 	}
 	return false
+}
+
+// GetFuncName return func Name
+func GetFuncName(fun interface{}) string {
+	return runtime.FuncForPC(reflect.ValueOf(fun).Pointer()).Name()
 }
