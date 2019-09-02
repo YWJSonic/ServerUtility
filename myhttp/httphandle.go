@@ -93,6 +93,7 @@ func HTTPResponse(httpconn http.ResponseWriter, data interface{}, err messagehan
 	result["data"] = data
 	result["error"] = err
 	fmt.Fprint(httpconn, foundation.JSONToString(result))
+	messagehandle.LogPrintln("HTTPResponse:", foundation.JSONToString(result))
 }
 
 // AddHeader add request header

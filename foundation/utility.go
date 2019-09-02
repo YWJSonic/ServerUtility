@@ -211,3 +211,10 @@ func ArrayShift(Target []map[string]interface{}) (map[string]interface{}, []map[
 
 	return out, Target
 }
+
+// CopyArray new array memory array
+func CopyArray(source []int) []int {
+	result := make([]int, len(source))
+	copy(result, source)
+	return result
+}
