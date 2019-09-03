@@ -9,6 +9,9 @@ import (
 // ServerDayPayLimit All player total can win score
 var ServerDayPayLimit int64 = 15000000
 
+// ServerDayPayDefault refresh default value
+var ServerDayPayDefault int64
+
 // IsInTotalMoneyWinLimit if int limit return true
 // 0 is no limit
 func IsInTotalMoneyWinLimit(limit, betMoney, totalWin int64) bool {
