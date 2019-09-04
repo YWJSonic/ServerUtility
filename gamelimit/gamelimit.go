@@ -1,8 +1,6 @@
 package gamelimit
 
 import (
-	"os"
-
 	"gitlab.com/ServerUtility/messagehandle"
 )
 
@@ -40,7 +38,7 @@ func IsInTotalBetRateWinLimit(limit, betMoney, totalWin int64) bool {
 func IsServerDayPayInLimit(allPlayerWinScore int64) bool {
 	if allPlayerWinScore > ServerDayPayLimit {
 		messagehandle.LogPrintf("AllPlayerDayWin:%d", allPlayerWinScore)
-		os.Exit(0)
+		return false
 	}
 
 	return true
