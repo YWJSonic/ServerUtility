@@ -7,7 +7,7 @@ type InfoLine struct {
 	WildPoint       [][]int `json:"WildPoint"`
 	LineSymbolPoint [][]int `json:"LineSymbolPoint"`
 	LineSymbolNum   [][]int `json:"LineSymbolNum"`
-	LineWinIndex    int     `json:"LineWinIndex,omitempty"`
+	LineWinIndex    int     `json:"LineWinIndex"`
 
 	// pay info
 	Score          int64 `json:"Score"`
@@ -111,5 +111,6 @@ func (I *InfoLine) AddNewLine(symbolNums []int, linePoint []int, option PlateOpt
 // NewInfoLine Get default init NewLineInfo
 func NewInfoLine() InfoLine {
 	var result InfoLine
+	result.LineWinIndex = -1
 	return result
 }
