@@ -27,6 +27,21 @@ func HTTPGet(ip string, values map[string][]string) []byte {
 	return result
 }
 
+// HTTPGetRequest Http Raw Request
+func HTTPGetRequest(client *http.Client, url string, value []byte) []byte {
+	req, err := http.NewRequest("GET", url, bytes.NewBuffer(value))
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Resp", resp, " ---- ", err)
+	}
+	defer resp.Body.Close()
+
+	body, _ := ioutil.ReadAll(resp.Body)
+	return body
+}
+
 // HTTPPostRequest ...
 func HTTPPostRequest(ip string, values map[string][]string) []byte {
 	// res, err := http.Post(ip, "application/x-www-form-urlencoded", strings.NewReader("name=cjb"))
@@ -113,6 +128,6 @@ func Option(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	headers.Add("Vary", "Access-Control-Request-Method")
 	headers.Add("Vary", "Access-Control-Request-Headers")
 	headers.Add("Access-Control-Allow-Headers", "Content-Type, Origin, Accept, token")
-	headers.Add("Access-Control-Allow-Methods", "GET, POST,OPTIONS")
+	headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.WriteHeader(http.StatusOK)
 }
