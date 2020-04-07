@@ -3,9 +3,9 @@ package iserver
 import (
 	"sync"
 
+	"github.com/YWJSonic/ServerUtility/dbservice"
+	"github.com/YWJSonic/ServerUtility/foundation"
 	"github.com/robfig/cron"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/dbservice"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/foundation"
 )
 
 // Setting ...

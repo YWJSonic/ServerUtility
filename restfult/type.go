@@ -3,9 +3,9 @@ package restfult
 import (
 	"net/http"
 
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/httprouter"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/messagehandle"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/myhttp"
+	"github.com/YWJSonic/ServerUtility/httprouter"
+	"github.com/YWJSonic/ServerUtility/messagehandle"
+	"github.com/YWJSonic/ServerUtility/myhttp"
 )
 
 // // IRestfult ...

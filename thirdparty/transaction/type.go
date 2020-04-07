@@ -3,7 +3,7 @@ package transaction
 import (
 	"errors"
 
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/myhttp"
+	"github.com/YWJSonic/ServerUtility/myhttp"
 )
 
 // User ...

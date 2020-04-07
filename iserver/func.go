@@ -3,7 +3,7 @@ package iserver
 import (
 	"sync"
 
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/dbservice"
+	"github.com/YWJSonic/ServerUtility/dbservice"
 )
 
 // NewSetting ..

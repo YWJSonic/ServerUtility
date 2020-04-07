@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/YWJSonic/ServerUtility/messagehandle"
 	"github.com/gorilla/websocket"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/messagehandle"
 )
 
 // Message game service call back handle on socket read,

@@ -1,7 +1,7 @@
 package gamelimit
 
 import (
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/messagehandle"
+	"github.com/YWJSonic/ServerUtility/messagehandle"
 )
 
 // ServerDayPayLimit All player total can win score

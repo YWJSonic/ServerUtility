@@ -8,8 +8,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/httprouter"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/messagehandle"
+	"github.com/YWJSonic/ServerUtility/httprouter"
+	"github.com/YWJSonic/ServerUtility/messagehandle"
 )
 
 // PostData get http post data

@@ -1,7 +1,7 @@
 package messagehandle
 
 import (
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/code"
+	"github.com/YWJSonic/ServerUtility/code"
 )
 
 // ErrorMsg ...

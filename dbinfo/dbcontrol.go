@@ -5,8 +5,8 @@ import (
 	"log"
 	"strconv"
 
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/code"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/messagehandle"
+	"github.com/YWJSonic/ServerUtility/code"
+	"github.com/YWJSonic/ServerUtility/messagehandle"
 )
 
 type SqlCLi struct {

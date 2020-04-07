@@ -1,6 +1,6 @@
 package transaction
 
-import "gitlab.fbk168.com/gamedevjp/backend-utility/utility/myhttp"
+import "github.com/YWJSonic/ServerUtility/myhttp"
 
 // NewTransaction ...
 func NewTransaction(path string, httpConn *myhttp.Service) *Service {

@@ -1,9 +1,9 @@
 package igame
 
 import (
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/attach"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/restfult"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/socket"
+	"github.com/YWJSonic/ServerUtility/attach"
+	"github.com/YWJSonic/ServerUtility/restfult"
+	"github.com/YWJSonic/ServerUtility/socket"
 )
 
 // IGame ...

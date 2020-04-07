@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"net/http"
 
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/dbservice"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/foundation"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/igame"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/messagehandle"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/myhttp"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/restfult"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/socket"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/thirdparty/transaction"
+	"github.com/YWJSonic/ServerUtility/dbservice"
+	"github.com/YWJSonic/ServerUtility/foundation"
+	"github.com/YWJSonic/ServerUtility/igame"
+	"github.com/YWJSonic/ServerUtility/messagehandle"
+	"github.com/YWJSonic/ServerUtility/myhttp"
+	"github.com/YWJSonic/ServerUtility/restfult"
+	"github.com/YWJSonic/ServerUtility/socket"
+	"github.com/YWJSonic/ServerUtility/thirdparty/transaction"
 )
 
 // IServer ...

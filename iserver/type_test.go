@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/foundation"
+	"github.com/YWJSonic/ServerUtility/foundation"
 )
 
 func TestService_Launch(t *testing.T) {

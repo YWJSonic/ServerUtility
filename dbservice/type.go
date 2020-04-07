@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/messagehandle"
+	"github.com/YWJSonic/ServerUtility/messagehandle"
 )
 
 // ConnSetting ...

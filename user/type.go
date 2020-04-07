@@ -1,8 +1,8 @@
 package user
 
 import (
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/attach"
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/playerinfo"
+	"github.com/YWJSonic/ServerUtility/attach"
+	"github.com/YWJSonic/ServerUtility/playerinfo"
 )
 
 // Info ...

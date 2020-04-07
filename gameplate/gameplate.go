@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"time"
 
-	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/foundation"
+	"github.com/YWJSonic/ServerUtility/foundation"
 )
 
 func init() {
