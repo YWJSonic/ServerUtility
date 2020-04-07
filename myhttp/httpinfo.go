@@ -1,8 +1,6 @@
 package myhttp
 
-import (
-	"gitlab.com/ServerUtility/httprouter"
-)
+import "gitlab.fbk168.com/gamedevjp/backend-utility/utility/httprouter"
 
 // ConnType ...
 const (

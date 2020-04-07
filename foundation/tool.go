@@ -6,8 +6,8 @@ import (
 	"runtime"
 	"time"
 
-	"gitlab.com/ServerUtility/code"
-	"gitlab.com/ServerUtility/messagehandle"
+	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/code"
+	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/messagehandle"
 )
 
 // ServerTotalPayScoreKey ...

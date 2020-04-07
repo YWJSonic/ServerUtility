@@ -3,7 +3,7 @@ package cacheinfo
 import (
 	"time"
 
-	"gitlab.com/ServerUtility/redigo/redis"
+	"github.com/gomodule/redigo/redis"
 )
 
 // Get redis command

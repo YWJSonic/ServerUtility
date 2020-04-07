@@ -3,8 +3,8 @@ package ulginfo
 import (
 	"strconv"
 
-	"gitlab.com/ServerUtility/foundation"
-	"gitlab.com/ServerUtility/playerinfo"
+	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/foundation"
+	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/playerinfo"
 )
 
 // Info plant ULG game play data

@@ -2,61 +2,15 @@ package myhttp
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
-	"fmt"
+	"errors"
 	"io/ioutil"
-	"log"
 	"net/http"
 
-	"gitlab.com/ServerUtility/foundation"
-	"gitlab.com/ServerUtility/httprouter"
-	"gitlab.com/ServerUtility/messagehandle"
+	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/httprouter"
+	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/messagehandle"
 )
-
-// HTTPGet ...
-func HTTPGet(ip string, values map[string][]string) []byte {
-	res, err := http.Get(ip)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer res.Body.Close()
-	result, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return result
-}
-
-// HTTPGetRequest Http Raw Request
-func HTTPGetRequest(client *http.Client, url string, value []byte) []byte {
-	req, err := http.NewRequest("GET", url, bytes.NewBuffer(value))
-	req.Header.Set("Content-Type", "application/json")
-
-	resp, err := client.Do(req)
-	if err != nil {
-		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Resp", resp, " ---- ", err)
-	}
-	defer resp.Body.Close()
-
-	body, _ := ioutil.ReadAll(resp.Body)
-	return body
-}
-
-// HTTPPostRequest ...
-func HTTPPostRequest(ip string, values map[string][]string) []byte {
-	// res, err := http.Post(ip, "application/x-www-form-urlencoded", strings.NewReader("name=cjb"))
-	res, err := http.PostForm(ip, values)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer res.Body.Close()
-	result, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return result
-
-}
 
 // PostData get http post data
 func PostData(r *http.Request) map[string]interface{} {
@@ -85,32 +39,6 @@ func PostData(r *http.Request) map[string]interface{} {
 	return data
 }
 
-// HTTPPostRawRequest Http Raw Request
-func HTTPPostRawRequest(client *http.Client, url string, value []byte) []byte {
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(value))
-	req.Header.Set("Content-Type", "application/json")
-	messagehandle.LogPrintln("HTTPPostRawRequest", req)
-
-	resp, err := client.Do(req)
-	if err != nil {
-		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Resp", resp)
-		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Error", err)
-	}
-	defer resp.Body.Close()
-
-	body, _ := ioutil.ReadAll(resp.Body)
-	return body
-}
-
-// HTTPResponse Respond to cliente
-func HTTPResponse(httpconn http.ResponseWriter, data interface{}, err messagehandle.ErrorMsg) {
-	result := make(map[string]interface{})
-	result["data"] = data
-	result["error"] = err
-	fmt.Fprint(httpconn, foundation.JSONToString(result))
-	messagehandle.LogPrintln("HTTPResponse:", foundation.JSONToString(result))
-}
-
 // AddHeader add request header
 func AddHeader(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
@@ -127,7 +55,136 @@ func Option(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	headers.Add("Vary", "Origin")
 	headers.Add("Vary", "Access-Control-Request-Method")
 	headers.Add("Vary", "Access-Control-Request-Headers")
-	headers.Add("Access-Control-Allow-Headers", "Content-Type, Origin, Accept, token")
+	headers.Add("Access-Control-Allow-Headers", "*")
 	headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.WriteHeader(http.StatusOK)
+}
+
+// Service ...
+type Service struct {
+	client *http.Client
+}
+
+// ConnectPool ...
+func (s *Service) ConnectPool() *http.Client {
+	if s.client == nil {
+		s.client = new(http.Client)
+		httptr := &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+
+			MaxIdleConns:        50,
+			MaxIdleConnsPerHost: 50,
+		}
+		s.client = &http.Client{
+			Transport: httptr,
+		}
+	}
+	return s.client
+}
+
+// GET ...
+func (s *Service) GET(url string, heard map[string][]string) ([]byte, error) {
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header = heard
+	res, err := s.ConnectPool().Do(req)
+	defer res.Body.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	if res.StatusCode != 200 {
+		return body, errors.New(res.Status)
+	}
+
+	return body, nil
+}
+
+// POST Http Raw Request
+func (s *Service) POST(url string, value []byte, header map[string][]string) ([]byte, error) {
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(value))
+	if _, ok := header["Content-Type"]; !ok {
+		header["Content-Type"] = []string{"application/json"}
+	}
+	req.Header = header
+	res, err := s.ConnectPool().Do(req)
+	if err != nil {
+		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Res", res)
+		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Error", err)
+		return nil, err
+	}
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	if res.StatusCode/100 != 2 {
+		return body, errors.New(res.Status)
+	}
+
+	return body, nil
+}
+
+// PUT Http Raw Request
+func (s *Service) PUT(url string, value []byte, header map[string][]string) ([]byte, error) {
+	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(value))
+	if _, ok := header["Content-Type"]; !ok {
+		header["Content-Type"] = []string{"application/json"}
+	}
+	req.Header = header
+	res, err := s.ConnectPool().Do(req)
+	if err != nil {
+		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Res", res)
+		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Error", err)
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	body, _ := ioutil.ReadAll(res.Body)
+	if res.StatusCode/100 != 2 {
+		return body, errors.New(res.Status)
+	}
+
+	return body, nil
+}
+
+// HTTPGet ...
+func (s *Service) HTTPGet(url string, values map[string][]string) ([]byte, error) {
+	res, err := s.ConnectPool().Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	return ioutil.ReadAll(res.Body)
+}
+
+// HTTPPostRequest ...
+func (s *Service) HTTPPostRequest(url string, values map[string][]string) ([]byte, error) {
+	res, err := s.ConnectPool().PostForm(url, values)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	return ioutil.ReadAll(res.Body)
+
+}
+
+// HTTPPostRawRequest Http Raw Request
+func (s *Service) HTTPPostRawRequest(url string, value []byte) ([]byte, error) {
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(value))
+	req.Header.Set("Content-Type", "application/json")
+	messagehandle.LogPrintln("HTTPPostRawRequest", req)
+
+	resp, err := s.ConnectPool().Do(req)
+	defer resp.Body.Close()
+	if err != nil {
+		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Resp", resp)
+		messagehandle.ErrorLogPrintln("HTTPPostRawRequest Error", err)
+		return nil, err
+	}
+
+	body, _ := ioutil.ReadAll(resp.Body)
+	return body, nil
 }

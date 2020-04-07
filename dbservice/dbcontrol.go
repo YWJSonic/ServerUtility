@@ -1,4 +1,4 @@
-package dbinfo
+package dbservice
 
 import (
 	"database/sql"
@@ -8,14 +8,6 @@ import (
 	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/code"
 	"gitlab.fbk168.com/gamedevjp/backend-utility/utility/messagehandle"
 )
-
-type SqlCLi struct {
-	DB *sql.DB
-}
-type SqlQuary struct {
-	Quary string
-	Args  []interface{}
-}
 
 // CallRead call stored procedure
 func CallRead(db *sql.DB, name string, args ...interface{}) ([]interface{}, messagehandle.ErrorMsg) {

@@ -39,6 +39,7 @@ const (
 	ULGInfoFormatError = 54
 	NoCheckoutError    = 55
 	CheckoutError      = 56
+	NewOrderError      = 57
 
 	RoomLock         = 1001
 	SelfInRoom       = 1002
