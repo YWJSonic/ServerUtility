@@ -113,6 +113,12 @@ func InterfaceToDynamicInt(v interface{}) code.Code {
 
 // InterfaceToString ...
 func InterfaceToString(v interface{}) string {
+	switch v.(type) {
+	case string:
+		return v.(string)
+	default:
+		return fmt.Sprint(v)
+	}
 	return v.(string)
 }
 
