@@ -33,24 +33,30 @@ type Service struct {
 	proxyData map[string]Setting
 }
 
-// HTTPLisentRun ...
-func (restfult *Service) HTTPLisentRun(adders string, HandleURL ...[]Setting) (err error) {
-	router := httprouter.New()
+func (restfult *Service) setHandler(router *httprouter.Router, settings ...[]Setting) {
 
-	for _, RESTfulURLArray := range HandleURL {
+	for _, RESTfulURLArray := range settings {
 		for _, RESTfulURLvalue := range RESTfulURLArray {
 			messagehandle.LogPrintf("Restfult Listen %v %s\n", RESTfulURLvalue.RequestType, RESTfulURLvalue.URL)
 
 			restfult.proxyData[RESTfulURLvalue.URL] = RESTfulURLvalue
+
 			if RESTfulURLvalue.RequestType == "GET" {
 				router.GET("/"+RESTfulURLvalue.URL, RESTfulURLvalue.Fun)
 			} else if RESTfulURLvalue.RequestType == "POST" {
 				router.POST("/"+RESTfulURLvalue.URL, restfult.ListenProxy)
 			}
-			router.OPTIONS("/"+RESTfulURLvalue.URL, myhttp.Option)
 
+			router.OPTIONS("/"+RESTfulURLvalue.URL, myhttp.Option)
 		}
 	}
+}
+
+// HTTPLisentRun ...
+func (restfult *Service) HTTPLisentRun(adders string, HandleURL ...[]Setting) (err error) {
+	router := httprouter.New()
+
+	restfult.setHandler(router, HandleURL...)
 
 	messagehandle.LogPrintln("Restfult run on", adders)
 
@@ -59,6 +65,24 @@ func (restfult *Service) HTTPLisentRun(adders string, HandleURL ...[]Setting) (e
 		messagehandle.ErrorLogPrintln("ListenAndServe", err)
 		return err
 	}
+	return nil
+}
+
+// HTTPSListen ... wrapper for TLS service function
+func (restfult *Service) HTTPSListen(adders string, certFile string, keyFile string, HandleURL ...[]Setting) error {
+	router := httprouter.New()
+
+	restfult.setHandler(router, HandleURL...)
+
+	messagehandle.LogPrintln("Service listen: ", adders)
+
+	err := http.ListenAndServeTLS(adders, certFile, keyFile, router)
+	if err != nil {
+		messagehandle.ErrorLogPrintln("ListenAndServe", err)
+
+		return err
+	}
+
 	return nil
 }
 
