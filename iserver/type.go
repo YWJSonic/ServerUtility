@@ -50,6 +50,11 @@ func (s *Service) LaunchRestfult(setting []restfult.Setting) {
 	s.Restfult.HTTPLisentRun(s.Setting.RestfultAdderss(), setting)
 }
 
+// LaunchHTTPS service start with TLS
+func (s *Service) LaunchHTTPS(setting []restfult.Setting, cert string, key string) {
+	s.Restfult.HTTPSListen(s.Setting.RestfultAdderss(), cert, key, setting)
+}
+
 // LaunchSocket service start
 func (s *Service) LaunchSocket(setting []socket.Setting) {
 	s.Socket.HTTPLisentRun(s.Setting.SocketAdderss(), setting)
