@@ -24,8 +24,8 @@ type Info struct {
 	SValue     string `json:"sValue"`
 	IValue     int64  `json:"iValue"`
 	UpdateTime int64  `json:"updateTime"`
-	IsDirty    bool
-	IsDBData   bool `json:"isDBData"`
+	IsDirty    bool   `json:"-"`
+	IsDBData   bool   `json:"isDBData"`
 }
 
 // GetKind ...

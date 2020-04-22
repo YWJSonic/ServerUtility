@@ -18,6 +18,7 @@ type IGame interface {
 // IRule ...
 type IRule interface {
 	GetBetMoney(index int64) int64
+	GetGameIndex() int64
 	GetGameTypeID() string
 	GameRequest(*RuleRequest) *RuleRespond
 	CheckGameType(userGameTypeID string) bool
