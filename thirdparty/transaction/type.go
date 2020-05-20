@@ -72,6 +72,7 @@ func (s Service) NewOrder(url, token string, payload []byte) ([]byte, error) {
 func (s Service) EndOrder(url, token string, payload []byte) ([]byte, error) {
 	header := map[string][]string{
 		"Authorization": []string{token},
+		"Content-Type":  []string{"application/protobuf"},
 	}
 
 	res, err := s.httpConn.PUT(url, payload, header)
