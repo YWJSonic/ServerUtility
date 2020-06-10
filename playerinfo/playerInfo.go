@@ -7,6 +7,7 @@ type Info struct {
 	// Money       int64  `json:"Money"`
 	MoneyU      uint64 `json:"MoneyU"`
 	GameAccount string `json:"GameAccount"`
+	Name        string `json:"Name"`
 
 	///////// for Server value
 	GameToken     string `json:"GameToken,omitempty"`
